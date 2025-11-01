@@ -17,7 +17,7 @@ model_name = "distilbert-base-uncased"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
 
-#  Tokenize text data
+#  Tokenize text data.
 def tokenize(batch):
     return tokenizer(batch["text"], padding="max_length", truncation=True, max_length=128)
 
@@ -31,7 +31,7 @@ test_enc = test_enc.rename_column("label", "labels")
 train_enc.set_format("torch", columns=["input_ids", "attention_mask", "labels"])
 test_enc.set_format("torch", columns=["input_ids", "attention_mask", "labels"])
 
-#  Define evaluation metric
+#  Define evaluation metric.
 def compute_metrics(eval_pred):
     logits, labels = eval_pred
     preds = logits.argmax(axis=-1)
@@ -65,7 +65,7 @@ print("🔹 Evaluating model...")
 results = trainer.evaluate()
 print(f"\n✅ Accuracy: {results['eval_accuracy']:.2f}")
 
-#  Custom test
+#  Custom test.
 text = "This movie was absolutely wonderful and the acting was brilliant!"
 tokens = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
 outputs = model(**tokens)
