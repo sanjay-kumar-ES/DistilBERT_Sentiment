@@ -4,7 +4,7 @@ import torch
 from sklearn.metrics import accuracy_score
 
 #  Load IMDb dataset.
-print("🔹 Loading IMDb dataset...")
+print(" Loading IMDb dataset...")
 dataset = load_dataset("imdb")
 
 # Use a smaller subset for quick training.
@@ -12,7 +12,7 @@ train_dataset = dataset["train"].select(range(2000))
 test_dataset = dataset["test"].select(range(500))
 
 #  Load tokenizer and model.
-print("🔹 Loading DistilBERT...")
+print(" Loading DistilBERT...")
 model_name = "distilbert-base-uncased"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
@@ -21,7 +21,7 @@ model = AutoModelForSequenceClassification.from_pretrained(model_name, num_label
 def tokenize(batch):
     return tokenizer(batch["text"], padding="max_length", truncation=True, max_length=128)
 
-print("🔹 Tokenizing data...")
+print(" Tokenizing data...")
 train_enc = train_dataset.map(tokenize, batched=True)
 test_enc = test_dataset.map(tokenize, batched=True)
 
@@ -58,10 +58,10 @@ trainer = Trainer(
 )
 
 #  Train and evaluate
-print("🔹 Training model...")
+print(" Training model...")
 trainer.train()
 
-print("🔹 Evaluating model...")
+print(" Evaluating model...")
 results = trainer.evaluate()
 print(f"\n✅ Accuracy: {results['eval_accuracy']:.2f}")
 
