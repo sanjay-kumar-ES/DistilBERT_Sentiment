@@ -63,11 +63,11 @@ trainer.train()
 
 print(" Evaluating model...")
 results = trainer.evaluate()
-print(f"\n✅ Accuracy: {results['eval_accuracy']:.2f}")
+print(f"\n Accuracy: {results['eval_accuracy']:.2f}")
 
 #  Custom test.
 text = "This movie was absolutely wonderful and the acting was brilliant!"
 tokens = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
 outputs = model(**tokens)
 pred = torch.argmax(outputs.logits, dim=1).item()
-print("\n🎬 Sentiment:", "POSITIVE" if pred == 1 else "NEGATIVE")
+print("\n Sentiment:", "POSITIVE" if pred == 1 else "NEGATIVE")
