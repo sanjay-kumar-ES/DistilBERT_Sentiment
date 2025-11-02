@@ -2,23 +2,23 @@ import torch
 import time
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-# 🔹 Check device availability
+#  Check device availability
 cpu = torch.device("cpu")
 gpu = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-print(f"🧠 PyTorch version: {torch.__version__}")
-print(f"🖥️ GPU available: {torch.cuda.is_available()}")
+print(f" PyTorch version: {torch.__version__}")
+print(f" GPU available: {torch.cuda.is_available()}")
 if torch.cuda.is_available():
     print(f"GPU name: {torch.cuda.get_device_name(0)}")
 
-# 🔹 Load DistilBERT model and tokenizer
-print("\n🔹 Loading DistilBERT model and tokenizer...")
+#  Load DistilBERT model and tokenizer
+print("\n Loading DistilBERT model and tokenizer...")
 model_name = "distilbert-base-uncased"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSequenceClassification.from_pretrained(model_name)
 model.eval()  # set to evaluation mode
 
-# 🔹 Create a batch of text inputs
+#  Create a batch of text inputs
 texts = [
     "This movie was absolutely fantastic! I loved it.",
     "The film was terrible, a complete waste of time.",
@@ -47,16 +47,16 @@ def run_inference(device):
     end = time.time()
     return end - start
 
-# 🔹 CPU Benchmark
-print("\n🔹 Running on CPU...")
+#  CPU Benchmark
+print("\n Running on CPU...")
 cpu_time = run_inference(cpu)
 print(f"CPU inference time: {cpu_time:.3f} sec")
 
-# 🔹 GPU Benchmark (if available)
+#  GPU Benchmark (if available)
 if gpu.type == "cuda":
-    print("\n🔹 Running on GPU...")
+    print("\n Running on GPU...")
     gpu_time = run_inference(gpu)
     print(f"GPU inference time: {gpu_time:.3f} sec")
-    print(f"\n🚀 Speedup: {cpu_time / gpu_time:.2f}x faster on GPU")
+    print(f"\n Speedup: {cpu_time / gpu_time:.2f}x faster on GPU")
 else:
-    print("\n⚠️ GPU not available — only CPU benchmarked.")
+    print("\n GPU not available — only CPU benchmarked.")
